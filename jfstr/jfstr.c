@@ -31,13 +31,12 @@ struct jfstring* jfstrcpy(struct jfstring *dest, struct jfstring *src)
 	}
 	if(dest->length <= src->length)
 	{
-		free(dest->s);
-		dest->s = (char*)malloc(sizeof(char) * (src->length + 1));
+		dest->s = (char*)realloc(dest->s, sizeof(char) * (src->length + 1));
 	}
-	int i = 0;
-	while(dest->s[i] = src->s[i])
-		++i;
-	dest->s[++i] = '\0'; 
+	char *tmpd = dest->s;
+	char *tmps = src->s;
+	while (*tmpd++ = *tmps++)
+		;
 	dest->length = src->length;
 	return dest; 
 }
@@ -57,15 +56,15 @@ struct jfstring* jfstrncpy(struct jfstring *dest, struct jfstring *src, int n)
 	}
 	if(dest->length < n)
 	{
-		free(dest->s);
-		dest->s = (char*)malloc(sizeof(char) * (n + 1));
+		dest->s = (char*)realloc(dest->s, sizeof(char) * (n + 1));
 	}
-
+	char *tmpd = dest->s;
+	char *tmps = src->s;
 	for(i = 0; i < n; i++)
 	{
-		dest->s[i] = src->s[i];
+		*tmpd++ = *tmps++;
 	}
-	dest->s[i] = '\0'; 
+	*tmpd = '\0';
 	dest->length = n;
 	return dest; 
 }
