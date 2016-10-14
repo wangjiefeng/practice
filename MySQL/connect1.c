@@ -3,18 +3,25 @@
 #include "mysql.h"
 int main(int argc, char *argv[])
 {
-	MYSQL *conn_ptr;
-	conn_ptr = mysql_init(NULL);
-	if(!conn_ptr) {
-		fprintf(stderr, "mysql_init failed\n");
-		return EXIT_FAILURE;
-	}
-	conn_ptr = mysql_real_connect(conn_ptr, "localhost", "root", "9082160as", "rick", 0, NULL, 0);
-	if(conn_ptr) {
+	MYSQL my_connection;
+	int ret;
+	
+	mysql_init(&my_connection);
+	
+	if(mysql_real_connect(&my_connection, "localhost", "root", "9082160as", "rick", 0, NULL, 0)) {
 		printf("Connection success\n");
+		ret = mysql_query(&my_connection, "INSERT INTO children(fname, age) VALUES('Ann', 3)");
+		if(!ret) {
+			printf("Insert %lu rwos\n", (unsigned long)mysql_affected_rows(&my_connection));
+		} else {
+			fprintf(stderr, "Insert error %d : %s\n", mysql_errno(&my_connection), mysql_error(&my_connection));
+		}
 	} else {
-		printf("Connection failed\n");
+		fprintf(stderr, "Connection failed\n");
+		if(mysql_errno(&my_connection)) {
+			fprintf(stderr, "Connection error %d: %s\n", mysql_errno(&my_connection), mysql_error(&my_connection));
+		}
 	}
-	mysql_close(conn_ptr);
+	
 	return EXIT_SUCCESS;
 }
