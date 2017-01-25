@@ -1,4 +1,4 @@
-PROGS = test1 test2 test3 container
+PROGS = test1 test2 test3 container entry spin
 all:
 	${PROGS}
 test1:
@@ -9,5 +9,9 @@ test3:
 	gcc test3.c  -o test3 `pkg-config --cflags --libs gtk+-2.0`
 container:
 	gcc container.c  -o container `pkg-config --cflags --libs gtk+-2.0`
+entry:
+	gcc entry.c  -o entry `pkg-config --cflags --libs gtk+-2.0`
+spin:
+	gcc spin.c  -o spin `pkg-config --cflags --libs gtk+-2.0`
 clean:
 	rm -f ${PROGS}
