@@ -13,5 +13,7 @@ entry:
 	gcc entry.c  -o entry `pkg-config --cflags --libs gtk+-2.0`
 spin:
 	gcc spin.c  -o spin `pkg-config --cflags --libs gtk+-2.0`
+tree:
+	gcc tree.c  -o tree `pkg-config --cflags --libs gtk+-2.0`
 clean:
 	rm -f ${PROGS}
