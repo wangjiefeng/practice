@@ -11,9 +11,9 @@ int main(int argc, char** argv)
 
   mpca_lang(MPCA_LANG_DEFAULT,
     "                                                     \
-      stra     : 'a';                                    \
-      strb     : 'b';                                    \
-      strab    : <stra>+ <strb>+;                           \
+      stra     : 'a'+;                                     \
+      strb     : 'b'+;                                     \
+      strab    : <stra> | <strb>;                         \
       str      : /^/ <strab>* /$/;                        \
     ",
     StrA, StrB, StrAB, Str);
